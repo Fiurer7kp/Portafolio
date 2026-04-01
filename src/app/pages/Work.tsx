@@ -13,12 +13,12 @@ const projects = [
   },
   {
     number: '02',
-    title: 'Portafolio de Diseño',
-    description: 'Vitrina de trabajos de diseño UI/UX que incluye aplicaciones móviles, interfaces web e identidades de marca.',
-    tags: ['Next.js', 'Tailwind CSS'],
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
+    title: 'Sistema de alertas SAFE PASTO',
+    description: 'Aplicación web para gestión de alertas de seguridad ciudadana en Pasto, con panel de administración y visualización de datos en tiempo real.',
+    tags: ['type script (front)', 'java (backend'],
+    image: '/safe.png.png',
     liveUrl: '#',
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Danielatrres123/Frontend-SafePasto..git',
   },
   {
     number: '03',
