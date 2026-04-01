@@ -6,11 +6,11 @@ interface LayoutProps {
 }
 
 const navLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'Services', path: '/services' },
-  { label: 'Resume', path: '/resume' },
-  { label: 'Work', path: '/work' },
-  { label: 'Contact', path: '/contact' },
+  { label: 'Inicio', path: '/' },
+  { label: 'Servicios', path: '/services' },
+  { label: 'Currículum', path: '/resume' },
+  { label: 'Proyectos', path: '/work' },
+  { label: 'Contacto', path: '/contact' },
 ]
 
 export default function Layout({ children }: LayoutProps) {
@@ -73,7 +73,7 @@ export default function Layout({ children }: LayoutProps) {
             })}
           </div>
 
-          {/* Hire me btn */}
+          {/* Contrátame btn */}
           <div className="hidden md:block">
             <Link
               to="/contact"
@@ -85,7 +85,7 @@ export default function Layout({ children }: LayoutProps) {
                 boxShadow: '0 4px 20px var(--accent-glow)',
               }}
             >
-              Hire me
+              Contrátame
             </Link>
           </div>
 
@@ -93,7 +93,7 @@ export default function Layout({ children }: LayoutProps) {
           <button
             className="md:hidden flex flex-col gap-1.5 p-2"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Abrir menú"
           >
             <span className="block w-6 h-0.5 transition-all duration-300" style={{ background: 'var(--text)', transform: menuOpen ? 'rotate(45deg) translateY(8px)' : '' }} />
             <span className="block w-6 h-0.5 transition-all duration-300" style={{ background: 'var(--text)', opacity: menuOpen ? 0 : 1 }} />
@@ -122,7 +122,7 @@ export default function Layout({ children }: LayoutProps) {
               className="px-6 py-2.5 rounded-full text-sm font-semibold text-center mt-2"
               style={{ background: 'var(--accent)', color: '#fff' }}
             >
-              Hire me
+              Contrátame
             </Link>
           </div>
         )}
