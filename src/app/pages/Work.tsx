@@ -22,12 +22,12 @@ const projects = [
   },
   {
     number: '03',
-    title: 'App de E-Commerce',
-    description: 'Plataforma de comercio electrónico full-stack con gestión de productos, carrito de compras e integración de pago seguro.',
-    tags: ['Node.js', 'React', 'MongoDB'],
-    image: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&q=80',
+    title: 'MusicPlayer',
+    description: 'Reproductor de musica estilo Spotify construido con Node.js, React . Permite a los usuarios crear listas de reproducción, buscar canciones y compartir música.',
+    tags: ['Node.js', 'React'],
+    image: '/reproductor.png',
     liveUrl: '#',
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Fiurer7kp/MusicPlayer.git',
   },
 ]
 
