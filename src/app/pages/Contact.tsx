@@ -69,9 +69,15 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Formulario */}
+        {/* Formulario - MOVIDO HACIA ARRIBA */}
         <div className="p-8 rounded-2xl"
-          style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: '0 8px 40px var(--shadow)' }}>
+          style={{ 
+            background: 'var(--bg-card)', 
+            border: '1px solid var(--border)', 
+            boxShadow: '0 8px 40px var(--shadow)',
+            position: 'relative',
+            top: '-100px'  // ← AJUSTA ESTE VALOR para subir o bajar
+          }}>
           <div className="grid grid-cols-2 gap-4 mb-4">
             {[
               { name: 'name', label: 'Nombre', placeholder: 'Juan' },
