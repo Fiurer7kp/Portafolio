@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Download, Github, Linkedin, Youtube, X } from 'lucide-react'
+import { Download, Github, Linkedin, Youtube, X, ChevronDown, ChevronUp } from 'lucide-react'
 
 const stats = [
   { value: '2+', label: 'Años de\nexperiencia' },
@@ -17,19 +17,25 @@ const socialLinks = [
 
 export default function Home() {
   const [visible, setVisible] = useState(false)
+  const [textoExpandido, setTextoExpandido] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100)
     return () => clearTimeout(t)
   }, [])
 
-  return (
-    <div>
-      <section className="min-h-screen max-w-6xl mx-auto px-6 flex flex-col justify-center">
-        <div className="grid md:grid-cols-2 gap-12 items-center py-16">
+  const textoCompleto = `Soy estudiante de ingeniería de software, estudio en la Universidad cooperativa de colombia, tengo 25 años y me gusta la programacion tambien los videojuegos, como el league of legens, fornite, rocket league entre otros, me gusta el futbol sea micro o sintetica, en tiempos libres me gusta salir con mis amigos a diferentes planes, tambien me gusta viajar e ir a conciertos escucho mucha musica en especial el trap argentino, fan y seguidor de duki.`
 
+  const textoResumido = textoCompleto.substring(0, 180) + '...'
+
+  return (
+    <div className="min-h-screen flex items-center">
+      <section className="w-full max-w-6xl mx-auto px-6 py-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-center" style={{ position: 'relative', top: '-25px' }}>
+          
+          {/* COLUMNA IZQUIERDA - TEXTO */}
           <div
-            className="order-2 md:order-1 transition-all duration-700"
+            className="transition-all duration-700"
             style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
           >
             <p className="text-sm font-medium tracking-widest uppercase mb-3"
@@ -42,12 +48,33 @@ export default function Home() {
               Sebastian<br />Coral
             </h1>
 
-            <p className="text-base leading-relaxed mb-8 max-w-md"
-              style={{ color: 'var(--text-muted)' }}>
-              Soy estudiante de ingeniería de software, estudio en la Universidad cooperativa de colombia, tengo 25 años y me gusta la programacion tambien los videojuegos, como el league of legens, fornite, rocket league entre otros, me gusta el futbol sea micro o sintetica, en tiempos libres me gusta salir con mis amigos a diferentes planes, tambien me gusta viajar e ir a conciertos escucho mucha musica en especial el trap argentino, fan y seguidor de duki.
-            </p>
+            {/* TEXTO CON BOTÓN MOSTRAR MÁS */}
+            <div className="mb-6">
+              <p className="text-base leading-relaxed max-w-md"
+                style={{ color: 'var(--text-muted)' }}>
+                {textoExpandido ? textoCompleto : textoResumido}
+              </p>
+              
+              <button
+                onClick={() => setTextoExpandido(!textoExpandido)}
+                className="flex items-center gap-2 mt-2 text-sm font-medium transition-all duration-300 hover:gap-3 group"
+                style={{ color: 'var(--accent)' }}
+              >
+                {textoExpandido ? (
+                  <>
+                    Mostrar menos
+                    <ChevronUp size={16} className="transition-transform group-hover:scale-110" />
+                  </>
+                ) : (
+                  <>
+                    Mostrar más
+                    <ChevronDown size={16} className="transition-transform group-hover:scale-110" />
+                  </>
+                )}
+              </button>
+            </div>
 
-            <div className="flex flex-wrap items-center gap-4 mb-12">
+            <div className="flex flex-wrap items-center gap-4 mb-10">
               <a href="/cv.pdf" download
                 className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border-2 transition-all duration-300 hover:scale-105"
                 style={{ borderColor: 'var(--accent)', color: 'var(--text)' }}>
@@ -66,11 +93,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8"
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6"
               style={{ borderTop: '1px solid var(--border)' }}>
               {stats.map((stat) => (
                 <div key={stat.value}>
-                  <p className="text-4xl font-bold mb-1"
+                  <p className="text-3xl md:text-4xl font-bold mb-1"
                     style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text)' }}>
                     {stat.value}
                   </p>
@@ -83,27 +110,132 @@ export default function Home() {
             </div>
           </div>
 
+          {/* COLUMNA DERECHA - CÍRCULO MOVIDO A LA IZQUIERDA */}
           <div
-            className="order-1 md:order-2 flex justify-center md:justify-end transition-all duration-700 delay-200"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
+            className="flex justify-center lg:justify-end transition-all duration-700 delay-200"
+            style={{ 
+              opacity: visible ? 1 : 0, 
+              transform: visible ? 'translateY(0)' : 'translateY(30px)'
+            }}
           >
-            <div style={{ position: 'relative', width: '320px', height: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', animation: 'spinRing 5s linear infinite', zIndex: 2 }}
-                viewBox="0 0 320 320"
-              >
-                <circle cx="160" cy="160" r="155" fill="none" stroke="#4FC3F7" strokeWidth="3" strokeDasharray="18 10" strokeLinecap="round" />
-              </svg>
+            <div style={{ marginRight: '90px' }}>
+              <div style={{ position: 'relative', width: '380px', height: '380px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                
+                {/* CÍRCULO EXTERIOR CON EFECTO NEÓN */}
+                <svg
+                  style={{ 
+                    position: 'absolute', 
+                    inset: 0, 
+                    width: '100%', 
+                    height: '100%', 
+                    animation: 'spinRing 12s linear infinite',
+                    zIndex: 2,
+                    filter: 'drop-shadow(0 0 8px #4FC3F7)'
+                  }}
+                  viewBox="0 0 380 380"
+                >
+                  <defs>
+                    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#4FC3F7">
+                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="50%" stopColor="#00E5FF">
+                        <animate attributeName="stop-color" values="#00E5FF;#4FC3F7;#00E5FF" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="100%" stopColor="#4FC3F7">
+                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                    </linearGradient>
+                    
+                    <filter id="neonGlow">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Anillo principal grueso */}
+                  <circle 
+                    cx="190" cy="190" r="175" 
+                    fill="none" 
+                    stroke="url(#neonGradient)" 
+                    strokeWidth="4" 
+                    strokeDasharray="25 15" 
+                    strokeLinecap="round"
+                    filter="url(#neonGlow)"
+                  />
+                  
+                  {/* Segundo anillo más delgado */}
+                  <circle 
+                    cx="190" cy="190" r="165" 
+                    fill="none" 
+                    stroke="#4FC3F7" 
+                    strokeWidth="1.5" 
+                    strokeOpacity="0.4"
+                    strokeDasharray="8 20"
+                    strokeLinecap="round"
+                  />
+                  
+                  {/* Puntos decorativos */}
+                  <circle cx="190" cy="15" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
+                  <circle cx="190" cy="365" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
+                  <circle cx="15" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
+                  <circle cx="365" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
+                  <circle cx="80" cy="80" r="3" fill="#4FC3F7" opacity="0.6" />
+                  <circle cx="300" cy="300" r="3" fill="#4FC3F7" opacity="0.6" />
+                  <circle cx="300" cy="80" r="3" fill="#00E5FF" opacity="0.6" />
+                  <circle cx="80" cy="300" r="3" fill="#00E5FF" opacity="0.6" />
+                </svg>
 
-              <div style={{ position: 'relative', width: '295px', height: '295px', borderRadius: '50%', overflow: 'hidden', zIndex: 3, boxShadow: '0 20px 60px var(--accent-glow)' }}>
-                <img src="/profile.jpg"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                {/* IMAGEN */}
+                <div style={{ 
+                  position: 'relative', 
+                  width: '340px', 
+                  height: '340px', 
+                  borderRadius: '50%', 
+                  overflow: 'hidden', 
+                  zIndex: 3, 
+                  boxShadow: '0 0 40px rgba(79, 195, 247, 0.3), inset 0 0 20px rgba(79, 195, 247, 0.2)',
+                  border: '2px solid rgba(79, 195, 247, 0.3)'
+                }}>
+                  <img 
+                    src="/profile.jpg"
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      objectPosition: 'center 25%'
+                    }} 
+                  />
+                </div>
               </div>
             </div>
           </div>
 
         </div>
       </section>
+
+      <style>{`
+        @keyframes spinRing {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        @media (max-width: 1024px) {
+          .min-h-screen {
+            min-height: auto;
+            padding: 2rem 0;
+          }
+        }
+      `}</style>
     </div>
   )
 }
