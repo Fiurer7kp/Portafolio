@@ -17,6 +17,7 @@ export default function Layout({ children }: LayoutProps) {
   const { pathname } = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [routeReveal, setRouteReveal] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -26,7 +27,11 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     setMenuOpen(false)
+    setRouteReveal(true)
     window.scrollTo(0, 0)
+
+    const timer = window.setTimeout(() => setRouteReveal(false), 660)
+    return () => window.clearTimeout(timer)
   }, [pathname])
 
   return (
@@ -65,7 +70,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="text-sm font-medium transition-colors duration-200 relative"
+                    className={"nav-link text-sm font-medium transition-colors duration-200 relative" + (isActive ? ' active' : '')}
                     style={{
                       color: isActive ? 'var(--accent)' : 'var(--text-muted)',
                       fontFamily: 'DM Sans, sans-serif',
@@ -111,16 +116,19 @@ export default function Layout({ children }: LayoutProps) {
               className="md:hidden px-6 pb-6 pt-2 flex flex-col gap-4"
               style={{ background: 'rgba(20,20,20,0.95)', borderTop: '1px solid var(--border)' }}
             >
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="text-sm font-medium py-2"
-                  style={{ color: pathname === link.path ? 'var(--accent)' : 'var(--text)' }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.path
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={"nav-link text-sm font-medium py-2" + (isActive ? ' active' : '')}
+                    style={{ color: isActive ? 'var(--accent)' : 'var(--text)' }}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
               <Link
                 to="/contact"
                 className="px-6 py-2.5 rounded-full text-sm font-semibold text-center mt-2"
@@ -133,8 +141,9 @@ export default function Layout({ children }: LayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="pt-16">
+        <main className="pt-16 page-transition" key={pathname}>
           {children}
+          <div className={`route-reveal${routeReveal ? ' active' : ''}`} />
         </main>
 
       </div>

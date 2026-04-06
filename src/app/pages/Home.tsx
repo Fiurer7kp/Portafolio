@@ -32,10 +32,102 @@ export default function Home() {
     <div className="min-h-screen flex items-center">
       <section className="w-full max-w-6xl mx-auto px-6 py-8">
         <div className="grid lg:grid-cols-2 gap-8 items-center" style={{ position: 'relative', top: '-25px' }}>
-          
-          {/* COLUMNA IZQUIERDA - TEXTO */}
+
+          {/* COLUMNA DERECHA EN DESKTOP, PRIMERA EN MÓVIL */}
           <div
-            className="transition-all duration-700"
+            className="order-1 lg:order-2 transition-all duration-700 ease-out"
+            style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
+          >
+            <div className="mx-auto lg:mx-0 lg:mr-24 max-w-[380px] w-full">
+              <div className="relative aspect-square w-full flex items-center justify-center">
+                <svg
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    animation: 'spinRing 12s linear infinite',
+                    zIndex: 2,
+                    filter: 'drop-shadow(0 0 8px #4FC3F7)'
+                  }}
+                  viewBox="0 0 380 380"
+                >
+                  <defs>
+                    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#4FC3F7">
+                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="50%" stopColor="#00E5FF">
+                        <animate attributeName="stop-color" values="#00E5FF;#4FC3F7;#00E5FF" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="100%" stopColor="#4FC3F7">
+                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
+                      </stop>
+                    </linearGradient>
+                    <filter id="neonGlow">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <circle
+                    cx="190" cy="190" r="175"
+                    fill="none"
+                    stroke="url(#neonGradient)"
+                    strokeWidth="4"
+                    strokeDasharray="25 15"
+                    strokeLinecap="round"
+                    filter="url(#neonGlow)"
+                  />
+                  <circle
+                    cx="190" cy="190" r="165"
+                    fill="none"
+                    stroke="#4FC3F7"
+                    strokeWidth="1.5"
+                    strokeOpacity="0.4"
+                    strokeDasharray="8 20"
+                    strokeLinecap="round"
+                  />
+                  <circle cx="190" cy="15" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
+                  <circle cx="190" cy="365" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
+                  <circle cx="15" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
+                  <circle cx="365" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
+                  <circle cx="80" cy="80" r="3" fill="#4FC3F7" opacity="0.6" />
+                  <circle cx="300" cy="300" r="3" fill="#4FC3F7" opacity="0.6" />
+                  <circle cx="300" cy="80" r="3" fill="#00E5FF" opacity="0.6" />
+                  <circle cx="80" cy="300" r="3" fill="#00E5FF" opacity="0.6" />
+                </svg>
+                <div style={{
+                  position: 'relative',
+                  width: '340px',
+                  height: '340px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  zIndex: 3,
+                  boxShadow: '0 0 40px rgba(79, 195, 247, 0.3), inset 0 0 20px rgba(79, 195, 247, 0.2)',
+                  border: '2px solid rgba(79, 195, 247, 0.3)'
+                }}>
+                  <img
+                    src="/profile.jpg"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center 25%'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* COLUMNA IZQUIERDA EN DESKTOP, SEGUNDA EN MÓVIL */}
+          <div
+            className="order-2 lg:order-1 transition-all duration-700 ease-out"
             style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
           >
             <p className="text-sm font-medium tracking-widest uppercase mb-3"
@@ -48,16 +140,15 @@ export default function Home() {
               Sebastian<br />Coral
             </h1>
 
-            {/* TEXTO CON BOTÓN MOSTRAR MÁS */}
             <div className="mb-6">
-              <p className="text-base leading-relaxed max-w-md"
+              <p className="text-base leading-relaxed max-w-xl"
                 style={{ color: 'var(--text-muted)' }}>
                 {textoExpandido ? textoCompleto : textoResumido}
               </p>
-              
+
               <button
                 onClick={() => setTextoExpandido(!textoExpandido)}
-                className="flex items-center gap-2 mt-2 text-sm font-medium transition-all duration-300 hover:gap-3 group"
+                className="flex items-center gap-2 mt-4 text-sm font-medium transition-all duration-300 hover:gap-3 group"
                 style={{ color: 'var(--accent)' }}
               >
                 {textoExpandido ? (
@@ -74,9 +165,9 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 mb-10">
+            <div className="flex flex-wrap items-center gap-4 mb-10 justify-start">
               <a href="/cv.pdf" download
-                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border-2 transition-all duration-300 hover:scale-105"
+                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border-2 transition-all duration-300 hover:scale-[1.03]"
                 style={{ borderColor: 'var(--accent)', color: 'var(--text)' }}>
                 <Download size={16} style={{ color: 'var(--accent)' }} />
                 DESCARGAR CV
@@ -110,112 +201,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA - CÍRCULO MOVIDO A LA IZQUIERDA */}
-          <div
-            className="flex justify-center lg:justify-end transition-all duration-700 delay-200"
-            style={{ 
-              opacity: visible ? 1 : 0, 
-              transform: visible ? 'translateY(0)' : 'translateY(30px)'
-            }}
-          >
-            <div style={{ marginRight: '90px' }}>
-              <div style={{ position: 'relative', width: '380px', height: '380px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                
-                {/* CÍRCULO EXTERIOR CON EFECTO NEÓN */}
-                <svg
-                  style={{ 
-                    position: 'absolute', 
-                    inset: 0, 
-                    width: '100%', 
-                    height: '100%', 
-                    animation: 'spinRing 12s linear infinite',
-                    zIndex: 2,
-                    filter: 'drop-shadow(0 0 8px #4FC3F7)'
-                  }}
-                  viewBox="0 0 380 380"
-                >
-                  <defs>
-                    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#4FC3F7">
-                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
-                      </stop>
-                      <stop offset="50%" stopColor="#00E5FF">
-                        <animate attributeName="stop-color" values="#00E5FF;#4FC3F7;#00E5FF" dur="4s" repeatCount="indefinite" />
-                      </stop>
-                      <stop offset="100%" stopColor="#4FC3F7">
-                        <animate attributeName="stop-color" values="#4FC3F7;#00BCD4;#4FC3F7" dur="4s" repeatCount="indefinite" />
-                      </stop>
-                    </linearGradient>
-                    
-                    <filter id="neonGlow">
-                      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
-                      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
-                      <feMerge>
-                        <feMergeNode in="blur2" />
-                        <feMergeNode in="blur1" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  
-                  {/* Anillo principal grueso */}
-                  <circle 
-                    cx="190" cy="190" r="175" 
-                    fill="none" 
-                    stroke="url(#neonGradient)" 
-                    strokeWidth="4" 
-                    strokeDasharray="25 15" 
-                    strokeLinecap="round"
-                    filter="url(#neonGlow)"
-                  />
-                  
-                  {/* Segundo anillo más delgado */}
-                  <circle 
-                    cx="190" cy="190" r="165" 
-                    fill="none" 
-                    stroke="#4FC3F7" 
-                    strokeWidth="1.5" 
-                    strokeOpacity="0.4"
-                    strokeDasharray="8 20"
-                    strokeLinecap="round"
-                  />
-                  
-                  {/* Puntos decorativos */}
-                  <circle cx="190" cy="15" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
-                  <circle cx="190" cy="365" r="5" fill="#4FC3F7" filter="url(#neonGlow)" />
-                  <circle cx="15" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
-                  <circle cx="365" cy="190" r="5" fill="#00E5FF" filter="url(#neonGlow)" />
-                  <circle cx="80" cy="80" r="3" fill="#4FC3F7" opacity="0.6" />
-                  <circle cx="300" cy="300" r="3" fill="#4FC3F7" opacity="0.6" />
-                  <circle cx="300" cy="80" r="3" fill="#00E5FF" opacity="0.6" />
-                  <circle cx="80" cy="300" r="3" fill="#00E5FF" opacity="0.6" />
-                </svg>
-
-                {/* IMAGEN */}
-                <div style={{ 
-                  position: 'relative', 
-                  width: '340px', 
-                  height: '340px', 
-                  borderRadius: '50%', 
-                  overflow: 'hidden', 
-                  zIndex: 3, 
-                  boxShadow: '0 0 40px rgba(79, 195, 247, 0.3), inset 0 0 20px rgba(79, 195, 247, 0.2)',
-                  border: '2px solid rgba(79, 195, 247, 0.3)'
-                }}>
-                  <img 
-                    src="/profile.jpg"
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                      objectPosition: 'center 25%'
-                    }} 
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
 
@@ -227,6 +212,11 @@ export default function Home() {
           to {
             transform: rotate(360deg);
           }
+        }
+
+        @keyframes heroFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
         }
         
         @media (max-width: 1024px) {

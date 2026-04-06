@@ -82,6 +82,197 @@ body {
 main {
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.page-transition {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(22px) scale(0.985);
+  animation: pageEntrance 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-transition::before,
+.page-transition::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.page-transition::before {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(79,195,247,0.12), transparent 45%);
+  background-size: 24px 24px, 24px 24px, 100% 100%;
+  background-position: 0 0, 0 0, center;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+  filter: blur(2px);
+  transform: translateX(-100%);
+  animation: pageGridSlide 0.52s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.page-transition::after {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.22), transparent 18%),
+    radial-gradient(circle at 80% 90%, rgba(79,195,247,0.16), transparent 22%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: pageGlow 0.72s ease-out 0.08s forwards;
+}
+
+.page-transition > * {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes pageEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes pageGridSlide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.18;
+  }
+  60% {
+    transform: translateX(10%);
+    opacity: 0.26;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pageGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+}
+
+.route-reveal {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transform: translateX(-120%) scaleY(1.08);
+  background: radial-gradient(circle at center, rgba(79,195,247,0.18), transparent 45%),
+              linear-gradient(135deg, rgba(79,195,247,0.18), transparent 60%);
+  filter: blur(4px);
+  mix-blend-mode: screen;
+  border-radius: 18px;
+  box-shadow: inset 0 0 120px rgba(79,195,247,0.18);
+  overflow: hidden;
+}
+
+.route-reveal::before,
+.route-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.route-reveal::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.18;
+  filter: blur(2px);
+}
+
+.route-reveal::after {
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.24), transparent 28%),
+              radial-gradient(circle at bottom right, rgba(79,195,247,0.16), transparent 28%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: revealFlash 0.45s ease-out 0.05s forwards;
+}
+
+.route-reveal.active {
+  animation: routeReveal 0.72s cubic-bezier(0.21, 0.82, 0.3, 1) forwards;
+  box-shadow: inset 0 0 200px rgba(79,195,247,0.28);
+}
+
+@keyframes routeReveal {
+  0% {
+    opacity: 1;
+    transform: translateX(-120%) scaleY(1.12);
+  }
+  20% {
+    opacity: 0.92;
+    transform: translateX(-18%) scaleY(1.04);
+  }
+  40% {
+    opacity: 0.6;
+    transform: translateX(4%) scaleY(1.02);
+  }
+  65% {
+    opacity: 0.28;
+    transform: translateX(48%) scaleY(0.98);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%) scaleY(0.92);
+  }
+}
+
+@keyframes revealFlash {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition,
+  .page-transition::before,
+  .page-transition::after,
+  .route-reveal {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
+
+@keyframes pageWipe {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
 /* ============================= */
@@ -101,16 +292,37 @@ main {
   z-index: 100;
 }
 
-.navbar a {
+.nav-link {
   color: white;
   text-decoration: none;
   margin: 0 15px;
   font-weight: 500;
-  transition: 0.3s;
+  position: relative;
+  transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.3s ease;
 }
 
-.navbar a:hover {
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.32s ease, left 0.32s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
   color: var(--accent);
+  text-shadow: 0 0 16px rgba(79,195,247,0.28);
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  left: 0;
+  width: 100%;
 }
 
 /* ============================= */
@@ -147,11 +359,41 @@ main {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 20px var(--accent-glow);
-  transition: 0.3s;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-btn:hover {
   transform: translateY(-3px);
+}
+
+.transition-smooth,
+button,
+a,
+.card,
+.btn {
+  transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-transition a,
+.page-transition button,
+.page-transition .card {
+  will-change: opacity, transform;
+}
+
+@media (max-width: 768px) {
+  #home {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-top: 0.75rem;
+  }
 }
 
 /* ============================= */
