@@ -3,12 +3,15 @@
   --accent-dark: #0288D1;
   --accent-light: #B3E5FC;
   --accent-glow: rgba(79, 195, 247, 0.25);
+
   --bg: #ffffff;
   --bg-soft: #F0F8FF;
-  --bg-card: #F7FBFF;
-  --text: #0D1B2A;
-  --text-muted: #5A7A8A;
-  --border: #D0E8F5;
+  --bg-card: rgba(255,255,255,0.08);
+
+  --text: #ffffff;
+  --text-muted: #cfe9f7;
+
+  --border: rgba(255,255,255,0.15);
   --shadow: rgba(2, 136, 209, 0.12);
 }
 
@@ -23,15 +26,16 @@ html {
 }
 
 body {
-  background-color: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+/* Selection */
 ::selection {
   background: var(--accent-light);
-  color: var(--text);
+  color: #000;
 }
 
 /* Scrollbar */
@@ -39,9 +43,187 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-soft);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 3px;
+}
+
+/* ============================= */
+/* VIDEO BACKGROUND */
+/* ============================= */
+
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 27, 42, 0.55);
+  z-index: -1;
+}
+
+/* ============================= */
+/* LAYOUT */
+/* ============================= */
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
+
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  z-index: 100;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: var(--accent);
+}
+
+/* ============================= */
+/* HERO / HOME */
+/* ============================= */
+
+#home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: transparent;
+}
+
+.hero-title {
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 22px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.hero-btn {
+  margin-top: 30px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--accent-glow);
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* ============================= */
+/* SECTIONS */
+/* ============================= */
+
+.section {
+  margin: 80px auto;
+  width: 90%;
+  max-width: 1200px;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+}
+
+/* ============================= */
+/* CARDS */
+/* ============================= */
+
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 25px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ============================= */
+/* BUTTONS */
+/* ============================= */
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: var(--accent-dark);
+}
+
+/* ============================= */
+/* TEXT */
+/* ============================= */
+
+h1, h2, h3 {
+  color: white;
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ============================= */
+/* FOOTER */
+/* ============================= */
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-muted);
 }
