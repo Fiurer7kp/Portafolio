@@ -10,14 +10,14 @@ const tabs: { id: Tab; label: string }[] = [
 ]
 
 const experience = [
-  { period: '2022 - Presente', title: 'Desarrollador Full Stack', company: 'Tech Solutions Inc.' },
-  { period: '2020 - 2021', title: 'Desarrollador Web Freelance', company: 'Startup de E-commerce' },
-  { period: 'Verano 2021', title: 'Pasante Front-End', company: 'Estudio de Diseño Web' },
+  { period: '2026 - Presente', title: 'Desarrollador aprendiz', company: 'Universidad cooperativa de colombia' },
+  { period: '2024 - 2025', title: 'Desarrollador Web', company: 'Universidad cooperativa de colombia.' },
+  { period: 'Verano 2024', title: 'Pasante Front-End', company: 'Universidad cooperativa de colombia.' },
 ]
 
 const education = [
-  { period: '2021 - Presente', title: 'Ingeniería de Software', company: 'Universidad Nacional' },
-  { period: '2019 - 2021', title: 'Bachillerato Técnico', company: 'Colegio Técnico' },
+  { period: '2021 - Presente', title: 'Ingeniería de Software', company: 'Universidad cooperativa de colombia.' },
+  { period: '2019', title: 'Bachillerato', company: 'Institucion educativa municipal libertad' },
 ]
 
 const skills = [
@@ -142,8 +142,8 @@ export default function Resume() {
               <div className="grid grid-cols-2 gap-4 pt-4">
                 {[
                   ['Nombre', 'Sebastian Coral'],
-                  ['Correo', 'sebastian@example.com'],
-                  ['Ubicación', 'Colombia'],
+                  ['Correo', 'Jhonjhoncoral@hotmail.com'],
+                  ['Ubicación', 'Pasto, Nariño, Colombia'],
                   ['Disponibilidad', 'Freelance / Medio tiempo'],
                 ].map(([label, value]) => (
                   <div key={label}>

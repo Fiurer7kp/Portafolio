@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Download, Github, Linkedin, Youtube, Twitter } from 'lucide-react'
+import { Download, Github, Linkedin, Youtube, X } from 'lucide-react'
 
 const stats = [
   { value: '2+', label: 'Años de\nexperiencia' },
-  { value: '10+', label: 'Proyectos\ncompletados' },
+  { value: '4+', label: 'Proyectos\ncompletados' },
   { value: '5+', label: 'Tecnologías\ndominadas' },
   { value: '200+', label: 'Commits\nde código' },
 ]
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+  { icon: Github, href: 'https://github.com/Fiurer7kp', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/sebastian-coral-34a574401/', label: 'LinkedIn' },
+  { icon: Youtube, href: 'https://www.youtube.com/@fiurer_7kp76', label: 'YouTube' },
+  { icon: X, href: 'https://x.com/coral_seba60315', label: 'X' },
 ]
 
 export default function Home() {
@@ -44,7 +44,7 @@ export default function Home() {
 
             <p className="text-base leading-relaxed mb-8 max-w-md"
               style={{ color: 'var(--text-muted)' }}>
-              Soy estudiante de ingeniería de software con conocimientos básicos de programación y un fuerte interés en el desarrollo de software y la tecnología.
+              Soy estudiante de ingeniería de software, estudio en la Universidad cooperativa de colombia, tengo 25 años y me gusta la programacion tambien los videojuegos, como el league of legens, fornite, rocket league entre otros, me gusta el futbol sea micro o sintetica, en tiempos libres me gusta salir con mis amigos a diferentes planes, tambien me gusta viajar e ir a conciertos escucho mucha musica en especial el trap argentino, fan y seguidor de duki.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mb-12">
