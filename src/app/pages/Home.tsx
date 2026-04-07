@@ -38,7 +38,7 @@ export default function Home() {
             className="order-1 lg:order-2 transition-all duration-700 ease-out"
             style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
           >
-            <div className="mx-auto lg:mx-0 lg:mr-24 w-32 sm:w-56 md:w-80 lg:w-96">
+            <div className="mx-auto lg:mx-0 lg:mr-24 max-w-[380px] w-full">
               <div className="relative aspect-square w-full flex items-center justify-center">
                 <svg
                   style={{
