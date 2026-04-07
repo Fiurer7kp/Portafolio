@@ -29,6 +29,15 @@ const projects = [
     liveUrl: '#',
     githubUrl: 'https://github.com/Fiurer7kp/MusicPlayer.git',
   },
+  {
+    number: '04',
+    title: 'RelojMundial',
+    description: 'Reloj mundial con cronometro, vista 7 paises en horario real, construido en python puro.',
+    tags: ['Python'],
+    image: '/reloj.png',
+    liveUrl: '#',
+    githubUrl: 'https://github.com/Fiurer7kp/RelojMundial.git',
+  },
 ]
 
 export default function Work() {
