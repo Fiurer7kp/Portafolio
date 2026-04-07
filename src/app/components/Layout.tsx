@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useTransition, TransitionEffect } from '../context/TransitionContext'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -13,11 +14,17 @@ const navLinks = [
   { label: 'Contacto', path: '/contact' },
 ]
 
+const TRANSITION_EFFECTS: TransitionEffect[] = ['zoom', 'cortina', 'glitch', 'flip', 'shimmer']
+let effectIndex = 0
+
 export default function Layout({ children }: LayoutProps) {
   const { pathname } = useLocation()
+  const { effect, triggerTransition } = useTransition()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [routeReveal, setRouteReveal] = useState(false)
+  const [activeEffect, setActiveEffect] = useState<string>('')
+  const [postImpact, setPostImpact] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -27,12 +34,24 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     setMenuOpen(false)
+    setActiveEffect(effect)
     setRouteReveal(true)
+    setPostImpact(effect === 'glitch')
     window.scrollTo(0, 0)
 
-    const timer = window.setTimeout(() => setRouteReveal(false), 660)
+    const timer = window.setTimeout(() => {
+      setRouteReveal(false)
+      setPostImpact(false)
+    }, 1300)
     return () => window.clearTimeout(timer)
-  }, [pathname])
+  }, [pathname, effect])
+
+  // Navegar con efecto automático
+  const handleNavClick = () => {
+    const randomEffect = TRANSITION_EFFECTS[effectIndex % TRANSITION_EFFECTS.length]
+    effectIndex++
+    triggerTransition(randomEffect)
+  }
 
   return (
     <div className="min-h-screen relative" style={{ color: 'var(--text)' }}>
@@ -70,6 +89,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Link
                     key={link.path}
                     to={link.path}
+                    onClick={handleNavClick}
                     className={"nav-link text-sm font-medium transition-colors duration-200 relative" + (isActive ? ' active' : '')}
                     style={{
                       color: isActive ? 'var(--accent)' : 'var(--text-muted)',
@@ -86,6 +106,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="hidden md:block">
               <Link
                 to="/contact"
+                onClick={handleNavClick}
                 className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
                 style={{
                   background: 'var(--accent)',
@@ -122,6 +143,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Link
                     key={link.path}
                     to={link.path}
+                    onClick={handleNavClick}
                     className={"nav-link text-sm font-medium py-2" + (isActive ? ' active' : '')}
                     style={{ color: isActive ? 'var(--accent)' : 'var(--text)' }}
                   >
@@ -131,6 +153,7 @@ export default function Layout({ children }: LayoutProps) {
               })}
               <Link
                 to="/contact"
+                onClick={handleNavClick}
                 className="px-6 py-2.5 rounded-full text-sm font-semibold text-center mt-2"
                 style={{ background: 'var(--accent)', color: '#fff' }}
               >
@@ -141,7 +164,11 @@ export default function Layout({ children }: LayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="pt-16 page-transition" key={pathname}>
+        <main 
+          className={`pt-16 page-transition ${activeEffect ? `effect-${activeEffect}` : ''} ${postImpact ? 'post-impact' : ''}`} 
+          key={pathname}
+          style={['cortina', 'flip', 'shimmer'].includes(activeEffect) ? { perspective: '1200px' } : {}}
+        >
           {children}
           <div className={`route-reveal${routeReveal ? ' active' : ''}`} />
         </main>

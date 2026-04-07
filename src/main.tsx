@@ -4,6 +4,7 @@ import App from './app/App.tsx'
 import './styles/tailwind.css'
 import './styles/theme.css'
 import './styles/fonts.css'
+import './styles/transitions.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -1,0 +1,437 @@
+/* ============================= */
+/* TRANSITION EFFECTS - 5 ANIMACIONES ESPECTACULARES */
+/* ============================= */
+
+/* EFECTO 1: CORTINA LÁSER - Rayo láser que divide la pantalla */
+.page-transition.effect-zoom {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  position: relative;
+}
+
+.page-transition.effect-zoom::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 8px;
+  height: 100vh;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #00E5FF 20%, 
+    #4FC3F7 50%, 
+    #00E5FF 80%, 
+    transparent 100%);
+  box-shadow: 0 0 30px #00E5FF, 0 0 60px rgba(79, 195, 247, 0.8);
+  animation: laserCross 0.9s ease-in-out forwards;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.page-transition.effect-zoom::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  animation: laserShutter 0.9s ease-in-out forwards;
+  z-index: 48;
+  pointer-events: none;
+}
+
+@keyframes laserCross {
+  0% {
+    left: -100%;
+    opacity: 1;
+  }
+  100% {
+    left: 100vw;
+    opacity: 1;
+  }
+}
+
+@keyframes laserShutter {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  50% {
+    clip-path: inset(0 100% 0 0);
+  }
+  51% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+  52% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);
+    transform: translateY(-50vh);
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: translateY(0);
+  }
+}
+
+/* EFECTO 2: PARTÍCULAS - Explosión de pedazos brillantes */
+.page-transition.effect-cortina {
+  animation: particleExit 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  opacity: 1 !important;
+}
+
+.page-transition.effect-cortina::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>');
+  animation: particlesFloat 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes particleExit {
+  0% {
+    opacity: 1;
+    filter: none;
+  }
+  60% {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes particlesFloat {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* EFECTO 3: DESTELLO + ONDA DE CHOQUE - Flash + onda circular */
+.page-transition.effect-glitch {
+  animation: flickerEntry 0.5s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
+  opacity: 0 !important;
+}
+
+.page-transition.effect-glitch::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(79,195,247,0.4) 70%, transparent 100%);
+  animation: shockwave 0.5s ease-out forwards;
+  z-index: 50;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.page-transition.effect-glitch::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  animation: flashFlash 0.5s ease-out forwards;
+  z-index: 49;
+  pointer-events: none;
+}
+
+@keyframes flickerEntry {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flashFlash {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shockwave {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 200vw;
+    height: 200vh;
+    opacity: 0;
+  }
+}
+
+/* EFECTO 4: GLITCH DISTORSIÓN DIGITAL - Pantalla averiada */
+.page-transition.effect-flip {
+  animation: glitchDistortion 0.8s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
+  opacity: 1 !important;
+}
+
+.page-transition.effect-flip::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(0, 229, 255, 0.3) 10%,
+    transparent 20%,
+    rgba(79, 195, 247, 0.2) 30%,
+    transparent 40%,
+    rgba(255, 0, 120, 0.2) 50%,
+    transparent 60%,
+    rgba(0, 229, 255, 0.3) 70%,
+    transparent 80%
+  );
+  background-size: 100% 8px;
+  animation: glitchLines 0.8s linear forwards;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.page-transition.effect-flip::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  animation: glitchBars 0.8s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  z-index: 49;
+  pointer-events: none;
+}
+
+@keyframes glitchDistortion {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-4px, 2px);
+  }
+  20% {
+    transform: translate(3px, -2px);
+  }
+  30% {
+    transform: translate(-2px, 4px);
+  }
+  40% {
+    transform: translate(4px, -3px);
+  }
+  50% {
+    transform: translate(-3px, 2px);
+  }
+  60% {
+    transform: translate(2px, -4px);
+  }
+  70% {
+    transform: translate(-1px, 1px);
+  }
+  80% {
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitchLines {
+  0% {
+    clip-path: inset(0% 0% 100% 0%);
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+@keyframes glitchBars {
+  0% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+  20% {
+    clip-path: polygon(0% 20%, 100% 20%, 100% 25%, 0% 25%);
+  }
+  40% {
+    clip-path: polygon(0% 50%, 100% 50%, 100% 52%, 0% 52%);
+  }
+  60% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 0% 60%);
+  }
+  80% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 0% 95%);
+  }
+  100% {
+    clip-path: inset(0%);
+  }
+}
+
+/* EFECTO 5: FLIP GIRA EN 3D - Tarjeta que se voltea con profundidad */
+.page-transition.effect-shimmer {
+  animation: flipPage3D 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards !important;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  opacity: 1 !important;
+}
+
+.page-transition.effect-shimmer::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    transparent 0%, 
+    rgba(0, 229, 255, 0.2) 20%, 
+    rgba(79, 195, 247, 0.3) 50%, 
+    rgba(0, 229, 255, 0.2) 80%, 
+    transparent 100%);
+  animation: shineEffect 0.7s ease-out forwards;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.page-transition.effect-shimmer::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    transparent 70%),
+    radial-gradient(circle at 50% 100%, 
+    rgba(0, 0, 0, 0.2) 0%, 
+    transparent 70%);
+  animation: depthShadow 0.7s ease-out forwards;
+  z-index: 48;
+  pointer-events: none;
+}
+
+@keyframes flipPage3D {
+  0% {
+    opacity: 1;
+    transform: rotateY(0deg) rotateX(0deg);
+    filter: brightness(1);
+  }
+  25% {
+    filter: brightness(1.1);
+  }
+  50% {
+    opacity: 1;
+    transform: rotateY(90deg) rotateX(5deg);
+  }
+  75% {
+    opacity: 0.8;
+    transform: rotateY(120deg) rotateX(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(180deg) rotateX(0deg);
+    filter: brightness(1);
+  }
+}
+
+@keyframes shineEffect {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes depthShadow {
+  0% {
+    opacity: 0;
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(0);
+  }
+}
+
+/* VIBRACIÓN POST-IMPACTO - Se aplica después del destello */
+.page-transition.post-impact {
+  animation: postImpactVibration 0.5s ease-out forwards;
+}
+
+@keyframes postImpactVibration {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    transform: translate(2px, 2px);
+  }
+  30% {
+    transform: translate(-1px, 2px);
+  }
+  40% {
+    transform: translate(2px, -1px);
+  }
+  50% {
+    transform: translate(-1px, -2px);
+  }
+  60% {
+    transform: translate(1px, 1px);
+  }
+  70% {
+    transform: translate(-0.5px, 0.5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
