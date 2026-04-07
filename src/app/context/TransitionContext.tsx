@@ -15,7 +15,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
   const triggerTransition = useCallback((newEffect: TransitionEffect) => {
     setEffect(newEffect)
-    // Reset después de la animación (adjustado según la duración máxima de los efectos)
+    // Reset después de la animación
     setTimeout(() => setEffect('default'), 1300)
   }, [])
 

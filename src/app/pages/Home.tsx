@@ -38,7 +38,7 @@ export default function Home() {
             className="order-1 lg:order-2 transition-all duration-700 ease-out"
             style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
           >
-            <div className="mx-auto lg:mx-0 lg:mr-24 max-w-[380px] w-full">
+            <div className="mx-auto lg:mx-0 lg:mr-24 w-32 sm:w-56 md:w-80 lg:w-96">
               <div className="relative aspect-square w-full flex items-center justify-center">
                 <svg
                   style={{
@@ -223,6 +223,29 @@ export default function Home() {
           .min-h-screen {
             min-height: auto;
             padding: 2rem 0;
+          }
+        }
+
+        /* MOBILE - Reducir solo el círculo en mobile */
+        @media (max-width: 768px) {
+          [style*="max-w-[380px]"] {
+            max-width: 280px !important;
+          }
+          
+          [style*="340px"] {
+            width: 240px !important;
+            height: 240px !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          [style*="max-w-[380px]"] {
+            max-width: 240px !important;
+          }
+          
+          [style*="340px"] {
+            width: 200px !important;
+            height: 200px !important;
           }
         }
       `}</style>
