@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Download, Github, Linkedin, Youtube, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { usePreferences } from '../context/PreferencesContext'
 
 const stats = [
   { value: '2+', label: 'Años de\nexperiencia' },
@@ -16,6 +17,7 @@ const socialLinks = [
 ]
 
 export default function Home() {
+  const { text } = usePreferences()
   const [visible, setVisible] = useState(false)
   const [textoExpandido, setTextoExpandido] = useState(false)
 
@@ -24,9 +26,9 @@ export default function Home() {
     return () => clearTimeout(t)
   }, [])
 
-  const textoCompleto = `Soy estudiante de ingeniería de software, estudio en la Universidad cooperativa de colombia, tengo 25 años y me gusta la programacion tambien los videojuegos, como el league of legens, fornite, rocket league entre otros, me gusta el futbol sea micro o sintetica, en tiempos libres me gusta salir con mis amigos a diferentes planes, tambien me gusta viajar e ir a conciertos escucho mucha musica en especial el trap argentino, fan y seguidor de duki.`
-
-  const textoResumido = textoCompleto.substring(0, 180) + '...'
+  const textoCompleto = text.home.introLong
+  const textoResumido = text.home.introShort
+  const [firstLine, secondLine] = text.home.name.split('\n')
 
   return (
     <div className="min-h-screen flex items-center">
@@ -132,12 +134,14 @@ export default function Home() {
           >
             <p className="text-sm font-medium tracking-widest uppercase mb-3"
               style={{ color: 'var(--text-muted)' }}>
-              Estudiante de Ingeniería de Software
+              {text.home.role}
             </p>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-5"
               style={{ fontFamily: 'Syne, sans-serif', color: 'var(--accent)' }}>
-              Sebastian<br />Coral
+              {firstLine}
+              <br />
+              {secondLine}
             </h1>
 
             <div className="mb-6">
@@ -153,12 +157,12 @@ export default function Home() {
               >
                 {textoExpandido ? (
                   <>
-                    Mostrar menos
+                    {text.buttons.showLess}
                     <ChevronUp size={16} className="transition-transform group-hover:scale-110" />
                   </>
                 ) : (
                   <>
-                    Mostrar más
+                    {text.buttons.showMore}
                     <ChevronDown size={16} className="transition-transform group-hover:scale-110" />
                   </>
                 )}
@@ -170,7 +174,13 @@ export default function Home() {
                 className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border-2 transition-all duration-300 hover:scale-[1.03]"
                 style={{ borderColor: 'var(--accent)', color: 'var(--text)' }}>
                 <Download size={16} style={{ color: 'var(--accent)' }} />
-                DESCARGAR CV
+                {text.buttons.downloadCv}
+              </a>
+
+              <a href="/cv.pdf" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border-2 transition-all duration-300 hover:scale-[1.03]"
+                style={{ borderColor: 'var(--accent)', color: 'var(--text)' }}>
+                {text.buttons.openCvNewTab}
               </a>
 
               <div className="flex items-center gap-3">
