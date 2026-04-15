@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTransition, TransitionEffect } from '../context/TransitionContext'
+import { usePreferences } from '../context/PreferencesContext'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
-const navLinks = [
-  { label: 'Inicio', path: '/' },
-  { label: 'Servicios', path: '/services' },
-  { label: 'Currículum', path: '/resume' },
-  { label: 'Proyectos', path: '/work' },
-  { label: 'Contacto', path: '/contact' },
+const navPaths = [
+  { key: 'home', path: '/' },
+  { key: 'services', path: '/services' },
+  { key: 'resume', path: '/resume' },
+  { key: 'work', path: '/work' },
+  { key: 'testimonials', path: '/testimonials' },
 ]
+
+const languageCodes = ['es', 'en', 'zh', 'ru'] as const
 
 const TRANSITION_EFFECTS: TransitionEffect[] = ['zoom', 'cortina', 'glitch', 'flip', 'shimmer']
 let effectIndex = 0
@@ -20,8 +23,10 @@ let effectIndex = 0
 export default function Layout({ children }: LayoutProps) {
   const { pathname } = useLocation()
   const { effect, triggerTransition } = useTransition()
+  const { language, setLanguage, theme, toggleTheme, text } = usePreferences()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
   const [routeReveal, setRouteReveal] = useState(false)
   const [activeEffect, setActiveEffect] = useState<string>('')
   const [postImpact, setPostImpact] = useState(false)
@@ -83,7 +88,7 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Desktop nav */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => {
+              {navPaths.map((link) => {
                 const isActive = pathname === link.path
                 return (
                   <Link
@@ -96,14 +101,51 @@ export default function Layout({ children }: LayoutProps) {
                       fontFamily: 'DM Sans, sans-serif',
                     }}
                   >
-                    {link.label}
+                    {text.nav[link.key as keyof typeof text.nav]}
                   </Link>
                 )
               })}
             </div>
 
-            {/* Contrátame btn */}
-            <div className="hidden md:block">
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="rounded-full border border-white/10 px-4 py-2 text-sm font-medium transition hover:border-white/20"
+                style={{ color: 'var(--text)' }}
+              >
+                {theme === 'dark' ? text.buttons.lightMode : text.buttons.darkMode}
+              </button>
+
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setLangOpen((open) => !open)}
+                  className="rounded-full border border-white/10 px-4 py-2 text-sm font-medium transition hover:border-white/20"
+                  style={{ color: 'var(--text)' }}
+                >
+                  {text.languageNames[language]}
+                </button>
+                {langOpen && (
+                  <div className="absolute right-0 mt-2 w-44 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/95 shadow-2xl backdrop-blur-xl">
+                    {languageCodes.map((code) => (
+                      <button
+                        key={code}
+                        type="button"
+                        onClick={() => {
+                          setLanguage(code)
+                          setLangOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left text-sm transition hover:bg-white/5"
+                        style={{ color: 'var(--text)' }}
+                      >
+                        {text.languageNames[code]}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <Link
                 to="/contact"
                 onClick={handleNavClick}
@@ -115,7 +157,7 @@ export default function Layout({ children }: LayoutProps) {
                   boxShadow: '0 4px 20px var(--accent-glow)',
                 }}
               >
-                Contrátame
+                {text.buttons.hireMe}
               </Link>
             </div>
 
@@ -137,7 +179,7 @@ export default function Layout({ children }: LayoutProps) {
               className="md:hidden px-6 pb-6 pt-2 flex flex-col gap-4"
               style={{ background: 'rgba(20,20,20,0.95)', borderTop: '1px solid var(--border)' }}
             >
-              {navLinks.map((link) => {
+              {navPaths.map((link) => {
                 const isActive = pathname === link.path
                 return (
                   <Link
@@ -147,17 +189,48 @@ export default function Layout({ children }: LayoutProps) {
                     className={"nav-link text-sm font-medium py-2" + (isActive ? ' active' : '')}
                     style={{ color: isActive ? 'var(--accent)' : 'var(--text)' }}
                   >
-                    {link.label}
+                    {text.nav[link.key as keyof typeof text.nav]}
                   </Link>
                 )
               })}
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="w-full rounded-full border border-white/10 px-4 py-3 text-sm font-medium transition hover:border-white/20"
+                style={{ color: 'var(--text)' }}
+              >
+                {theme === 'dark' ? text.buttons.lightMode : text.buttons.darkMode}
+              </button>
+
+              <div className="rounded-2xl border border-white/10 bg-slate-950/95 p-3">
+                <p className="text-xs uppercase tracking-[0.3em] mb-3" style={{ color: 'var(--text-muted)' }}>
+                  Idioma
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {languageCodes.map((code) => (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => {
+                        setLanguage(code)
+                        setMenuOpen(false)
+                      }}
+                      className="rounded-xl border border-white/10 px-3 py-2 text-sm font-medium transition hover:bg-white/5"
+                      style={{ color: 'var(--text)' }}
+                    >
+                      {text.languageNames[code]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <Link
                 to="/contact"
                 onClick={handleNavClick}
                 className="px-6 py-2.5 rounded-full text-sm font-semibold text-center mt-2"
                 style={{ background: 'var(--accent)', color: '#fff' }}
               >
-                Contrátame
+                {text.buttons.hireMe}
               </Link>
             </div>
           )}
